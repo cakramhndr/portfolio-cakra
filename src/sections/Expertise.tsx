@@ -4,7 +4,6 @@ import SectionHeader from "../components/SectionHeader";
 import TechBadge from "../components/TechBadge";
 import { skillCategories } from "../data/skills";
 import { currentFocus } from "../data/experience";
-import { useScrollReveal } from "../hooks/useScrollReveal";
 
 const iconMap: Record<string, React.ElementType> = {
   "code-2": Code2,
