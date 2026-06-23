@@ -10,6 +10,10 @@ import {
   CheckCircle2,
   Clock,
   Circle,
+  Database,
+  Users,
+  Brain,
+  Percent,
 } from "lucide-react";
 import FeatureCard from "../components/FeatureCard";
 import ImageModal from "../components/ImageModal";
@@ -57,24 +61,48 @@ const features = [
 ];
 
 const roadmapCompleted = [
-  "Authentication",
-  "Dashboard",
+  "POS Transactions",
   "Product Management",
   "Categories",
-  "Transactions",
-  "Inventory",
-  "Reports",
+  "Suppliers",
+  "Customers",
+  "Inventory Management",
   "Purchase Orders",
   "Stock Opname",
-  "AI Assistant",
+  "Customer Returns",
+  "Cash Register Management",
+  "Sales Reporting",
+  "CRM Analytics",
+  "Role & Permission System",
+  "Activity Logs",
+  "AI Assistant Foundation",
 ];
 
-const roadmapInProgress = ["Multi Store", "Mobile Optimization"];
+const roadmapInProgress = [
+  {
+    title: "AI Conversation Intelligence",
+    goal: "AI understands business data directly from the database",
+    examples: [
+      "Top selling products",
+      "Low stock prediction",
+      "Customer insights",
+      "Profit analysis",
+    ],
+  },
+];
 
 const roadmapPlanned = [
-  "Accounting Module",
-  "Supplier Portal",
-  "Advanced Analytics",
+  "Executive Dashboard AI",
+  "Predictive Analytics",
+  "Multi Store Management",
+  "Mobile Optimization",
+];
+
+const stats = [
+  { value: "85%", label: "Beta Complete", icon: Percent },
+  { value: "10+", label: "Business Modules", icon: Database },
+  { value: "5", label: "User Roles", icon: Users },
+  { value: "AI", label: "Assistant Ready", icon: Brain },
 ];
 
 export default function SwiftPOSShowcase() {
@@ -107,7 +135,7 @@ export default function SwiftPOSShowcase() {
         </motion.p>
 
         {/* Main Showcase - 40/60 split */}
-        <div className="grid lg:grid-cols-5 gap-12 items-center mb-20">
+        <div className="grid lg:grid-cols-5 gap-12 items-center mb-16">
           {/* Left: Info (40%) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -120,24 +148,60 @@ export default function SwiftPOSShowcase() {
               SwiftPOS
             </h2>
             <p className="text-xl text-[#4a5a6a] font-light mb-6">
-              Modern Point of Sale & Inventory Management System
+              AI-Powered Retail Management Platform
             </p>
 
-            {/* Status badge */}
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#fe7f2d] animate-pulse" />
-              <span className="text-sm font-medium text-[#fe7f2d]">
-                Active Development
+            {/* Status badges */}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-sm font-medium text-green-600">
+                  SwiftPOS Beta
+                </span>
+              </div>
+              <span className="px-3 py-1 text-xs font-medium text-[#fe7f2d] bg-[#fe7f2d]/10 rounded-full border border-[#fe7f2d]/20">
+                85% Complete
+              </span>
+              <span className="px-3 py-1 text-xs font-medium text-[#fe7f2d] bg-[#fe7f2d]/10 rounded-full border border-[#fe7f2d]/20">
+                10+ Business Modules
+              </span>
+              <span className="px-3 py-1 text-xs font-medium text-purple-600 bg-purple-100 rounded-full border border-purple-200">
+                AI Powered
               </span>
             </div>
 
             <p className="text-[#4a5a6a] leading-relaxed mb-8">
-              SwiftPOS is a modern POS and inventory management platform built
-              using React, Laravel, MySQL, and AI-assisted development
-              workflows. The platform helps businesses manage sales, inventory,
-              purchasing, reporting, and business insights in a single
-              integrated system.
+              SwiftPOS is an AI-powered retail management platform built with
+              React and Laravel. The platform combines Point of Sale, Inventory
+              Management, Purchase Orders, Customer Relationship Management,
+              Cash Register Operations, Reporting, Audit Logs, and AI-assisted
+              business insights into a single integrated system.
             </p>
+
+            {/* Stats Row */}
+            <div className="grid grid-cols-4 gap-3 mb-8">
+              {stats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="text-center p-3 rounded-xl bg-white border border-[#fe7f2d]/10"
+                  >
+                    <Icon size={18} className="text-[#fe7f2d] mx-auto mb-1" />
+                    <p className="font-display font-bold text-lg text-[#233d4d] leading-none mb-0.5">
+                      {stat.value}
+                    </p>
+                    <p className="text-[#8a9aa8] text-[10px] leading-tight">
+                      {stat.label}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
 
             {/* Tech stack */}
             <div className="flex flex-wrap gap-2 mb-8">
@@ -311,14 +375,22 @@ export default function SwiftPOSShowcase() {
                 In Progress
               </h3>
             </div>
+            <div className="mb-4">
+              <p className="font-medium text-sm text-[#233d4d]">
+                🚧 AI Conversation Intelligence
+              </p>
+              <p className="text-xs text-[#4a5a6a] mt-1">
+                AI understands business data directly from the database
+              </p>
+            </div>
             <ul className="space-y-2">
-              {roadmapInProgress.map((item) => (
+              {roadmapInProgress[0].examples.map((example) => (
                 <li
-                  key={item}
+                  key={example}
                   className="flex items-center gap-2 text-sm text-[#4a5a6a]"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#fe7f2d] shrink-0" />
-                  {item}
+                  {example}
                 </li>
               ))}
             </ul>

@@ -161,7 +161,7 @@ export default function Hero() {
             className="flex items-center justify-center gap-4"
           >
             <a
-              href="#"
+              href="https://github.com/cakramhndr"
               target="_blank"
               rel="noopener noreferrer"
               className="w-11 h-11 rounded-full bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 flex items-center justify-center text-[#4a5a6a] hover:bg-[#fe7f2d] hover:text-white hover:border-[#fe7f2d] transition-all duration-300"
@@ -177,7 +177,7 @@ export default function Hero() {
               </svg>
             </a>
             <a
-              href="#"
+              href="https://linkedin.com/in/cakramhndr"
               target="_blank"
               rel="noopener noreferrer"
               className="w-11 h-11 rounded-full bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 flex items-center justify-center text-[#4a5a6a] hover:bg-[#fe7f2d] hover:text-white hover:border-[#fe7f2d] transition-all duration-300"
@@ -193,7 +193,7 @@ export default function Hero() {
               </svg>
             </a>
             <a
-              href="mailto:cakra@email.com"
+              href="mailto:cakramahendra7@gmail.com"
               className="w-11 h-11 rounded-full bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 flex items-center justify-center text-[#4a5a6a] hover:bg-[#fe7f2d] hover:text-white hover:border-[#fe7f2d] transition-all duration-300"
               aria-label="Email"
             >

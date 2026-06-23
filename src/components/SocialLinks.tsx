@@ -13,9 +13,13 @@ export default function SocialLinks({
   const containerClass = size === "sm" ? "w-9 h-9" : "w-11 h-11";
 
   const links = [
-    { href: "#", icon: Github, label: "GitHub" },
-    { href: "#", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:cakra@email.com", icon: Mail, label: "Email" },
+    { href: "https://github.com/cakramhndr", icon: Github, label: "GitHub" },
+    {
+      href: "https://linkedin.com/in/cakramhndr",
+      icon: Linkedin,
+      label: "LinkedIn",
+    },
+    { href: "mailto:cakramahendra7@gmail.com", icon: Mail, label: "Email" },
   ];
 
   return (
