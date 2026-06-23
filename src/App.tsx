@@ -5,6 +5,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
+import SwiftPOSShowcase from "./sections/SwiftPOSShowcase";
 import Expertise from "./sections/Expertise";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
@@ -24,6 +25,7 @@ export default function App() {
         <main className="bg-white">
           <Hero />
           <About />
+          <SwiftPOSShowcase />
           <Expertise />
           <Projects />
           <Contact />
