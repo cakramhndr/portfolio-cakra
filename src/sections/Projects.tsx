@@ -9,7 +9,7 @@ export default function Projects() {
       className="min-h-screen flex items-center section-padding"
     >
       <div className="container-main w-full">
-        <SectionHeader title="Projects" />
+        <SectionHeader title="Other Projects" />
         <div className="space-y-8">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />

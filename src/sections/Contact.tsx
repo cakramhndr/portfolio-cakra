@@ -1,24 +1,68 @@
 import { useState } from "react";
-import { Send, Check } from "lucide-react";
+import { Send, Check, AlertCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionHeader from "../components/SectionHeader";
 import SocialLinks from "../components/SocialLinks";
 
-export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+type FormStatus = "idle" | "sending" | "success" | "error";
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+export default function Contact() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    (e.target as HTMLFormElement).reset();
+    setStatus("sending");
+
+    // Simulate API call — ready for Resend integration
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setStatus("success");
+      setToast({ type: "success", message: "Message sent successfully!" });
+      (e.target as HTMLFormElement).reset();
+    } catch {
+      setStatus("error");
+      setToast({
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
+    }
+
+    setTimeout(() => {
+      setStatus("idle");
+      setToast(null);
+    }, 4000);
   };
 
   return (
     <section
       id="contact"
-      className="min-h-screen flex items-center section-padding bg-[#f5f5f5]"
+      className="min-h-screen flex items-center section-padding bg-[#f5f5f5] relative"
     >
+      {/* Toast Notification */}
+      {toast && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className={`fixed top-24 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg ${
+            toast.type === "success"
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
+          }`}
+        >
+          {toast.type === "success" ? (
+            <Check size={18} />
+          ) : (
+            <AlertCircle size={18} />
+          )}
+          <span className="text-sm font-medium">{toast.message}</span>
+        </motion.div>
+      )}
+
       <div className="container-main w-full">
         <SectionHeader title="Contact" />
 
@@ -102,41 +146,55 @@ export default function Contact() {
                   type="text"
                   placeholder="Your Name"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300"
+                  disabled={status === "sending"}
+                  className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300 disabled:opacity-50"
                 />
                 <input
                   type="email"
                   placeholder="Your Email"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300"
+                  disabled={status === "sending"}
+                  className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300 disabled:opacity-50"
                 />
               </div>
               <input
                 type="text"
                 placeholder="Subject"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300"
+                disabled={status === "sending"}
+                className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300 disabled:opacity-50"
               />
               <textarea
                 rows={5}
                 placeholder="Your Message"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300 resize-none"
+                disabled={status === "sending"}
+                className="w-full px-4 py-3 rounded-xl bg-white/60 backdrop-blur-lg border border-[#fe7f2d]/15 text-[#233d4d] placeholder:text-[#8a9aa8] focus:outline-none focus:border-[#fe7f2d] focus:shadow-[0_0_10px_rgba(254,127,45,0.1)] transition-all duration-300 resize-none disabled:opacity-50"
               />
               <motion.button
                 type="submit"
-                disabled={submitted}
-                whileHover={submitted ? {} : { scale: 1.02, y: -1 }}
-                whileTap={submitted ? {} : { scale: 0.98 }}
+                disabled={status === "sending" || status === "success"}
+                whileHover={status === "idle" ? { scale: 1.02, y: -1 } : {}}
+                whileTap={status === "idle" ? { scale: 0.98 } : {}}
                 className={`w-full py-3.5 rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
-                  submitted
+                  status === "success"
                     ? "bg-green-500 text-white"
-                    : "bg-gradient-to-r from-[#fe7f2d] to-[#e06a1a] text-white hover:shadow-[0_0_30px_rgba(254,127,45,0.3)]"
-                }`}
+                    : status === "error"
+                      ? "bg-red-500 text-white"
+                      : "bg-gradient-to-r from-[#fe7f2d] to-[#e06a1a] text-white hover:shadow-[0_0_30px_rgba(254,127,45,0.3)]"
+                } disabled:cursor-not-allowed`}
               >
-                {submitted ? (
+                {status === "sending" ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" /> Sending...
+                  </>
+                ) : status === "success" ? (
                   <>
                     <Check size={18} /> Message Sent!
+                  </>
+                ) : status === "error" ? (
+                  <>
+                    <AlertCircle size={18} /> Try Again
                   </>
                 ) : (
                   <>
