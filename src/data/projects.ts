@@ -24,13 +24,33 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Coming Soon",
-    description: "New projects will be showcased here.",
-    tech: [],
-    featured: false,
+    title: "Kencana Furniture",
+    description:
+      "A modern e-commerce platform for home furniture with complete buyer and seller features.",
+    tech: ["Laravel", "Vue.js", "Bootstrap"],
+    status: "Pending Development",
+    featured: true,
   },
   {
     id: 3,
+    title: "UrbanLab",
+    description:
+      "A dark-themed mobile app for UrbanLab shoe store with product catalog, live chat, and seamless checkout experience.",
+    tech: ["Flutter", "Laravel", "Firebase"],
+    status: "In Design",
+    featured: true,
+  },
+  {
+    id: 4,
+    title: "SwiftGG",
+    description:
+      "A game top up platform with multi-payment support, game catalog, global rank, and rewards system for gamers.",
+    tech: ["React JS", "Laravel", "Tailwind CSS"],
+    status: "In Design",
+    featured: true,
+  },
+  {
+    id: 5,
     title: "Coming Soon",
     description: "New projects will be showcased here.",
     tech: [],

@@ -1,15 +1,35 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import {
+  ExternalLink,
+  Github,
+  ShoppingBag,
+  Smartphone,
+  Gamepad2,
+} from "lucide-react";
 import type { Project } from "../data/projects";
 import TechBadge from "./TechBadge";
 
 interface ProjectCardProps {
   project: Project;
   index?: number;
+  onViewDetails?: () => void;
 }
 
-export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  index = 0,
+  onViewDetails,
+}: ProjectCardProps) {
   if (project.featured) {
+    const isKencana = project.id === 2;
+    const isUrbanLab = project.id === 3;
+    const isSwiftGG = project.id === 4;
+    const statusBadgeStyle = isKencana
+      ? "text-gray-500 bg-gray-100 border-gray-200"
+      : isUrbanLab || isSwiftGG
+        ? "text-purple-600 bg-purple-100 border-purple-200"
+        : "text-[#fe7f2d] bg-[#fe7f2d]/10 border-[#fe7f2d]/20";
+
     return (
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -23,25 +43,47 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           <div className="bg-gradient-to-br from-[#fe7f2d]/10 to-[#fe7f2d]/5 p-12 flex items-center justify-center min-h-[300px]">
             <div className="text-center">
               <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-[#fe7f2d]/20 flex items-center justify-center">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#fe7f2d"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect width="18" height="14" x="3" y="3" rx="2" ry="2" />
-                  <line x1="3" x2="21" y1="9" y2="9" />
-                  <line x1="9" x2="9" y1="21" y2="9" />
-                </svg>
+                {isKencana ? (
+                  <ShoppingBag size={36} stroke="#fe7f2d" strokeWidth="1.5" />
+                ) : isUrbanLab ? (
+                  <Smartphone size={36} stroke="#fe7f2d" strokeWidth="1.5" />
+                ) : isSwiftGG ? (
+                  <Gamepad2 size={36} stroke="#fe7f2d" strokeWidth="1.5" />
+                ) : (
+                  <svg
+                    width="36"
+                    height="36"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#fe7f2d"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect width="18" height="14" x="3" y="3" rx="2" ry="2" />
+                    <line x1="3" x2="21" y1="9" y2="9" />
+                    <line x1="9" x2="9" y1="21" y2="9" />
+                  </svg>
+                )}
               </div>
               <p className="font-display text-2xl font-bold text-[#233d4d]">
-                SwiftPOS
+                {isKencana
+                  ? "Kencana Furniture"
+                  : isUrbanLab
+                    ? "UrbanLab"
+                    : isSwiftGG
+                      ? "SwiftGG"
+                      : "SwiftPOS"}
               </p>
-              <p className="text-[#4a5a6a] text-sm">Point of Sale System</p>
+              <p className="text-[#4a5a6a] text-sm">
+                {isKencana
+                  ? "Online Furniture Store"
+                  : isUrbanLab
+                    ? "Shoe Store Mobile App"
+                    : isSwiftGG
+                      ? "Game Top Up Platform"
+                      : "Point of Sale System"}
+              </p>
             </div>
           </div>
 
@@ -52,7 +94,9 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
                 {project.title}
               </h3>
               {project.status && (
-                <span className="px-3 py-1 text-xs font-medium text-[#fe7f2d] bg-[#fe7f2d]/10 rounded-full border border-[#fe7f2d]/20">
+                <span
+                  className={`px-3 py-1 text-xs font-medium rounded-full border ${statusBadgeStyle}`}
+                >
                   {project.status}
                 </span>
               )}
@@ -66,15 +110,15 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               ))}
             </div>
             <div className="flex gap-3">
-              <motion.a
-                href={project.liveUrl}
+              <motion.button
+                onClick={onViewDetails}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#fe7f2d] to-[#e06a1a] text-white text-sm font-medium"
               >
                 <ExternalLink size={16} /> View Details
-              </motion.a>
-              {project.githubUrl && (
+              </motion.button>
+              {!isUrbanLab && !isSwiftGG && project.githubUrl && (
                 <motion.a
                   href={project.githubUrl}
                   whileHover={{ scale: 1.05, y: -2 }}
